@@ -23,10 +23,10 @@ export const getUser=async(req: Request, res: Response)=>{
     
 }
 export  const updateUser= async(req:Request,res:Response)=>{
-    console.log(req.params.id);
+    console.log(req.params.userId);
      const { name, email } = req.body;
   try {
-   const result=await userServices.updateUser(req.params.id as string,name ,email)
+   const result=await userServices.updateUser(req.params.userId as string,name ,email)
   console.log(result.rows[0]);
     if (result.rows.length === 0) {
       res.status(404).json({
@@ -52,7 +52,7 @@ export  const updateUser= async(req:Request,res:Response)=>{
 export const deleteUser=async(req:Request,res:Response)=>{
   //  console.log(req.params.id);
   try {
-   const result=await userServices.deleteUser(req.params.id as string)
+   const result=await userServices.deleteUser(req.params.userId as string)
   // console.log(result.rows);
     if (result.rowCount=== 0) {
       res.status(404).json({

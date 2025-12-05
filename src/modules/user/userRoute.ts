@@ -5,6 +5,6 @@ const router= Router()
 
 
  router.get("/",getUser)
- router.put("/:id",updateUser)
- router.delete("/:id",deleteUser)
+ router.put("/:userId",updateUser)
+ router.delete("/:userId",deleteUser)
  export  const userRoute= router
