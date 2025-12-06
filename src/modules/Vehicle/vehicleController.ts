@@ -90,6 +90,9 @@ export const deleteVehicle=async(req:Request,res:Response)=>{
   try {
    const result=await  vehicleServices.deleteVehicle(req.params.vehicleId as string)
   // console.log(result.rows);
+  
+
+  ;
     if (result.rowCount=== 0) {
       res.status(404).json({
         success: false,

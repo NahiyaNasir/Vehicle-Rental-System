@@ -1,0 +1,70 @@
+import { Request, Response } from "express";
+import { bookingServices } from "./bookingService";
+
+export const createBooking = async (req: Request, res: Response) => {
+  try {
+    
+
+    const result = await  bookingServices.createBooking(req.body);
+    console.log(result.rows[0]);
+    
+    res.status(201).json({
+      success: true,
+      message: "Booking created successfully",
+
+      data: result.rows[0],
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+export const getBookings=async(req: Request, res: Response)=>{
+  
+ try {
+     const result=await  bookingServices.getBookings()
+    console.log(result.rows);
+    res.status(200).json({
+      success: true,
+      message: "booking retrieved successfully",
+      data: result.rows,
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+
+    
+}
+
+export  const updateBooking= async(req:Request,res:Response)=>{
+    console.log(req.params.bookingIdId);
+     const { status } = req.body;
+  try {
+   const result=await bookingServices.updateBooking(req.params.bookingId as string,status)
+  console.log(result.rows[0]);
+    if (result.rows.length === 0) {
+      res.status(404).json({
+        success: false,
+        message: "booking not found",
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        message: " booking status updated  successfully",
+        data: result.rows[0],
+      });
+    }
+} catch (err: any) {
+  res.status(500).json({
+    success: false,
+    message: err.message,
+  });
+}
+
+}

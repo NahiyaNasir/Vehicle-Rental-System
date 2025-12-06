@@ -31,7 +31,13 @@ import { pool } from "../../config/Db";
   }
 
   const deleteVehicle=async(vehicleId:string)=>{
-     const result= await pool.query(` DELETE FROM  vehicles WHERE  id=$1 RETURNING *`,[vehicleId])
+     const result= await pool.query(` DELETE FROM  vehicles WHERE  id=$1 AND rent_end_date >= CURRENT_DATE;`,[vehicleId])
+  //    if (result.rows.length > 0) {
+  //   return {
+  //     blocked: true,
+  //     message: "Vehicle cannot be deleted because it has active bookings",
+  //   }
+  //  }
     return  result
   }
 
