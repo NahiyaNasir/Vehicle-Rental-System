@@ -61,7 +61,7 @@ const createBooking = async (payload: Record<string, unknown>) => {
 
  const updateBooking=async(bookingId:string,status:string)=>{
     
-    const result= await pool.query(`UPDATE bookings SET  daily_rent_price=$1, availability_status=$2 WHERE id=$3 RETURNING *`,[  status,bookingId,])
+    const result= await pool.query(`UPDATE bookings SET  SET status = 'cancelled' WHERE id=$1 RETURNING *`,[  status,bookingId,])
     return  result
   }
 

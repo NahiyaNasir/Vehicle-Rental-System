@@ -17,11 +17,11 @@ import jwt from "jsonwebtoken";
       expiresIn: "2d",
     }
   );
-  console.log({ token });
+  // console.log({ token });
 
   return { token,  user };
  }
-
+// ? login user
    const loginUser = async (email: string, password: string) => {
   console.log({ email });
   const result = await pool.query(`SELECT * FROM users WHERE email=$1`, [

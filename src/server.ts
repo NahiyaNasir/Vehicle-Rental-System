@@ -3,8 +3,9 @@ import express, { Request, Response }  from "express";
 import { userRoute } from "./modules/user/userRoute";
 import { authRoutes } from "./modules/auth/authRoute";
 import { vehicleRoute } from "./modules/Vehicle/vehicleRoute";
-import logger from "./middlewar/logger";
+import logger from "./middleware/verify";
 import { bookingRoute } from "./modules/Bookings/bookingRoute";
+import verify from "./middleware/verify";
 
 const port = config.port;
 const app = express();
@@ -20,7 +21,7 @@ app.use("/api/v1/auth",authRoutes)
 app.use("/api/v1/vehicles",vehicleRoute)
 //  booking
 app.use("/api/v1/bookings",bookingRoute)
-app.get("/", logger, (req: Request, res: Response) => {
+app.get("/", verify, (req: Request, res: Response) => {
   res.send("Hello Next Level Developers!");
 });
 app.listen(port, () => {
