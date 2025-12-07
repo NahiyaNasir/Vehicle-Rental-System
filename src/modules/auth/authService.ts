@@ -14,7 +14,7 @@ import jwt from "jsonwebtoken";
     { name: user.name, email: user.email, role: user.role },
     config.jwtSecret as string,
     {
-      expiresIn: "2d",
+      expiresIn: "7d",
     }
   );
   // console.log({ token });
@@ -48,6 +48,7 @@ import jwt from "jsonwebtoken";
     }
   );
   console.log({ token });
+console.log("SIGN SECRET:", config.jwtSecret);
 
   return { token, user };
   

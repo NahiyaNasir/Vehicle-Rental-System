@@ -8,9 +8,7 @@ const config = {
   connection_str: process.env.CONNECTION_STR,
   port: process.env.PORT,
   jwtSecret: process.env.JWT_SECRET,
-  //  ssl: {
-  //   rejectUnauthorized: false,
-  // },
+  
 };
 
 export default config;
