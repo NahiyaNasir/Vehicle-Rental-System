@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createBooking, getBookings } from "./bookingController";
+import { createBooking, getBookings, updateBooking } from "./bookingController";
 import auth from "../../middleware/auth";
 
 
@@ -7,5 +7,5 @@ const router= Router()
 
 router.post("/",auth('admin','customer'), createBooking)
 router.get("/", auth('admin','customer'), getBookings)
-//  router.put("/::bookingId")
+ router.put("/:bookingId",auth('admin'), updateBooking)
  export  const bookingRoute= router

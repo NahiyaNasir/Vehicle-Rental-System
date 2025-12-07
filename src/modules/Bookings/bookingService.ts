@@ -60,9 +60,20 @@ const createBooking = async (payload: Record<string, unknown>) => {
  }
 
  const updateBooking=async(bookingId:string,status:string)=>{
+    const bookingUpdateResult= await pool.query(`UPDATE bookings SET  status=$1  WHERE id=$2 RETURNING *`,[  status, bookingId])
+  
+    const vehicleUpdateResult= await pool.query(`UPDATE vehicles v SET availability_status = CASE 
+               WHEN b."status" IN ('active', 'booked') THEN 'booked'
+                WHEN b."status" IN ('returned', 'cancelled') THEN 'available'
+             END
+ FROM bookings b
+ WHERE b.id = $1
+   AND v.id = b.vehicle_id RETURNING v.availability_status`,[bookingId ])
     
-    const result= await pool.query(`UPDATE bookings SET  SET status = 'cancelled' WHERE id=$1 RETURNING *`,[  status,bookingId,])
-    return  result
+ return {
+      booking: bookingUpdateResult,
+        vehicle: vehicleUpdateResult
+ }
   }
 
 
@@ -72,3 +83,13 @@ export const bookingServices = {
   getBookings,
   updateBooking
 };
+
+
+// UPDATE vehicles v
+// SET status = CASE 
+//                WHEN b.booking_status IN ('created', 'booked') THEN 'booked'
+//                WHEN b.booking_status IN ('returned', 'cancelled') THEN 'available'
+//              END
+// FROM bookings b
+// WHERE b.id = 1
+//   AND v.id = b.vehicle_id;

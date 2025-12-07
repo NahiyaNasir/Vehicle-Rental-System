@@ -43,12 +43,14 @@ export const getBookings=async(req: Request, res: Response)=>{
 }
 
 export  const updateBooking= async(req:Request,res:Response)=>{
-    console.log(req.params.bookingIdId);
-     const { status } = req.body;
+    console.log(req.params.bookingId);
+       const { status}=req.body
+       console.log(req.body);
   try {
    const result=await bookingServices.updateBooking(req.params.bookingId as string,status)
-  console.log(result.rows[0]);
-    if (result.rows.length === 0) {
+  // console.log(result.rows[0]);
+  
+    if (result.booking.rows.length === 0 || result.vehicle.rows.length === 0) {
       res.status(404).json({
         success: false,
         message: "booking not found",
@@ -57,7 +59,13 @@ export  const updateBooking= async(req:Request,res:Response)=>{
       res.status(200).json({
         success: true,
         message: " booking status updated  successfully",
-        data: result.rows[0],
+        data: {
+                
+                booking: result.booking.rows[0], 
+                vehicle: result.vehicle.rows[0] 
+             
+            },
+         
       });
     }
 } catch (err: any) {

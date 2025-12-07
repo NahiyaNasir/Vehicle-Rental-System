@@ -14,7 +14,7 @@ const auth = (...roles: string[]) => {
           .json({ message: "Authorization header missing!" });
       }
       const token = authHeader.split(" ")[1];
-      console.log(token,'token');
+      // console.log(token,'token');
       if (!token) {
         return res.status(401).json({ message: "You are not allowed!!" });
       }
@@ -22,7 +22,7 @@ const auth = (...roles: string[]) => {
         token,
         config.jwtSecret as string
       ) as JwtPayload;
-      console.log({ decoded });
+      // console.log({ decoded });
 
       req.user = decoded;
 

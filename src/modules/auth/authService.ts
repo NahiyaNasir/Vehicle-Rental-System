@@ -47,7 +47,7 @@ import jwt from "jsonwebtoken";
       expiresIn: "7d",
     }
   );
-  console.log({ token });
+  // console.log({ token });
 console.log("SIGN SECRET:", config.jwtSecret);
 
   return { token, user };
