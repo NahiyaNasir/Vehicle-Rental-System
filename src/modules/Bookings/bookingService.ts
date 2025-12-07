@@ -44,8 +44,8 @@ const createBooking = async (payload: Record<string, unknown>) => {
   //       }}
   return result;
 };
-const getBookings = async () => {
-  const result = await pool.query(`SELECT * FROM bookings`);
+const getBookings = async (userId:string) => { 
+  const result = await pool.query(`SELECT * FROM bookings WHERE customer_id = $1`,[userId]);
   return result;
 };
 

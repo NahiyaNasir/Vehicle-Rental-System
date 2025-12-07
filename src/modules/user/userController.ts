@@ -24,9 +24,10 @@ export const getUser=async(req: Request, res: Response)=>{
 }
 export  const updateUser= async(req:Request,res:Response)=>{
     console.log(req.params.userId);
-     const { name, email } = req.body;
+     const { name, email, role,phone} = req.body;
   try {
-   const result=await userServices.updateUser(req.params.userId as string,name ,email)
+    
+   const result=await userServices.updateUser(req.params.userId as string,name ,email,role,phone)
   console.log(result.rows[0]);
     if (result.rows.length === 0) {
       res.status(404).json({

@@ -1,5 +1,8 @@
 import { Request, Response } from "express";
 import { bookingServices } from "./bookingService";
+import { getBookingsAdmin } from "../../Admin/adminService";
+
+
 
 export const createBooking = async (req: Request, res: Response) => {
   try {
@@ -23,15 +26,28 @@ export const createBooking = async (req: Request, res: Response) => {
 };
 
 export const getBookings=async(req: Request, res: Response)=>{
-  
+  const user = req?.user  as any
  try {
-     const result=await  bookingServices.getBookings()
+
+if (user.role !=='admin') {
+   const userId = user?.id;
+   const result=await  bookingServices.getBookings(userId)
     console.log(result.rows);
     res.status(200).json({
       success: true,
       message: "booking retrieved successfully",
       data: result.rows,
     });
+}
+const result=await   getBookingsAdmin()
+    console.log(result.rows);
+    res.status(200).json({
+      success: true,
+      message: "booking retrieved successfully",
+      data: result.rows,
+    });
+ 
+     
   } catch (err: any) {
     res.status(500).json({
       success: false,

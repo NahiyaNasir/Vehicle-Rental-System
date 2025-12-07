@@ -6,8 +6,8 @@ import { pool } from "../../config/Db";
   return result;
  }
 
-   const updateUser=async(userId:string,name:string,email:string)=>{
-    const result= await pool.query(`UPDATE users SET name=$1, email=$2 WHERE id=$3 RETURNING *`,[name,email,userId])
+   const updateUser=async(userId:string,name:string,email:string,role:string,phone:string)=>{
+    const result= await pool.query(`UPDATE users SET name=$1, email=$2,role=$3,phone=$4  WHERE id=$$ RETURNING *`,[name,email,role,phone,userId])
     return  result
   }
   const deleteUser=async(userId:string)=>{

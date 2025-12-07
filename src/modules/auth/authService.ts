@@ -5,10 +5,10 @@ import jwt from "jsonwebtoken";
 
     const registerUser=async(payload: Record<string, unknown>)=>{
        const { name, email, password, role, phone } = payload;
-         console.log(payload,"user");
+        //  console.log(payload,"user");
           const hashedPass = await bcrypt.hash(password as string, 10);
           const result= await pool.query(`INSERT INTO users(name, email, password,role,phone) VALUES($1, $2, $3,$4,$5) RETURNING *`,[name,email,hashedPass,role,phone]);
-          console.log(result,"res");
+          // console.log(result,"res");
             const user = result.rows[0];
              const token = jwt.sign(
     { name: user.name, email: user.email, role: user.role },
