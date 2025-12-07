@@ -31,13 +31,18 @@ import { pool } from "../../config/Db";
   }
 
   const deleteVehicle=async(vehicleId:string)=>{
+    const activeBookings = await pool.query(
+    `SELECT id FROM bookings WHERE vehicle_id = $1 AND status = 'active'`,
+    [vehicleId]
+  );
+
+  if (activeBookings.rows.length > 0) {
+    throw new Error(
+      "Cannot delete vehicle. It is currently  active bookings."
+    );
+  }
      const result= await pool.query(` DELETE FROM  vehicles WHERE  id=$1 AND rent_end_date >= CURRENT_DATE;`,[vehicleId])
-  //    if (result.rows.length > 0) {
-  //   return {
-  //     blocked: true,
-  //     message: "Vehicle cannot be deleted because it has active bookings",
-  //   }
-  //  }
+  
     return  result
   }
 
