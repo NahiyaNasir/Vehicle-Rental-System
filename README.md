@@ -1,10 +1,38 @@
 
+
 # Vehicle-Rental-System
 
 A complete vehicle rental management system where customers can rent vehicles by selecting dates, and admins can manage vehicles, bookings, and user roles.
 
-Live URL: Add your deployed link here
+Live URL: https://vehicle-rental-system-beige.vercel.app
 
+
+
+## Features
+
+ ✅ 1. Authentication & Authorization
+
+User registration (POST /auth/register)
+
+User login with JWT (POST /auth/login)
+
+Role-based access:
+
+admin
+
+customer
+
+Auth middleware to protect routes
+
+👥 2. User Management (Admin Only)
+
+List all users
+
+View single user
+
+Update user
+
+Delete user
 
 
 ## Tech Stack
