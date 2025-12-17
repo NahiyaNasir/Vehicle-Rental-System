@@ -14,7 +14,7 @@ import jwt from "jsonwebtoken";
     { name: user.name, email: user.email, role: user.role },
     config.jwtSecret as string,
     {
-      expiresIn: "7d",
+      expiresIn: "365d",
     }
   );
   // console.log({ token });
@@ -26,7 +26,7 @@ import jwt from "jsonwebtoken";
   console.log({ email });
   const result = await pool.query(`SELECT * FROM users WHERE email=$1`, [
     email, ])
-    console.log({ result });
+    // console.log({ result });
 
  if (result.rows.length === 0) {
     return null;
@@ -35,7 +35,7 @@ import jwt from "jsonwebtoken";
 
   const match = await bcrypt.compare(password, user.password);
 
-  console.log({ match, user });
+  // console.log({ match, user });
   if (!match) {
     return false;
   }
@@ -44,11 +44,11 @@ import jwt from "jsonwebtoken";
     { name: user.name, email: user.email, role: user.role },
     config.jwtSecret as string,
     {
-      expiresIn: "7d",
+      expiresIn: "365d",
     }
   );
-  // console.log({ token });
-console.log("SIGN SECRET:", config.jwtSecret);
+  console.log({ token });
+// console.log("SIGN SECRET:", config.jwtSecret);
 
   return { token, user };
   

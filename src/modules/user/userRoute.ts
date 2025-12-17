@@ -1,8 +1,8 @@
 import { Router } from "express";
 import {  deleteUser, getUser, updateUser } from "./userController";
-import logger from "../../middleware/verify";
+
 import auth from "../../middleware/auth";
-import verify from "../../middleware/verify";
+
 
 
 const router= Router()

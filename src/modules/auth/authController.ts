@@ -5,7 +5,7 @@ import { authServices } from "./authService";
 
  const registerUser=async(req: Request, res: Response)=>{
       // const {   name,email, password,role,phone } = req.body;
-      console.log(req.body);
+      // console.log(req.body);
      
     try {
     const result = await authServices.registerUser(req.body);

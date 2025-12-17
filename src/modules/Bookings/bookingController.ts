@@ -61,9 +61,27 @@ const result=await   getBookingsAdmin()
 export  const updateBooking= async(req:Request,res:Response)=>{
     console.log(req.params.bookingId);
        const { status}=req.body
-       console.log(req.body);
+         const user = req?.user  as any
+         console.log(user);
+      //  console.log(req.body);
   try {
-   const result=await bookingServices.updateBooking(req.params.bookingId as string,status)
+
+if (user.role === 'customer' && status !== 'cancelled') {
+  return res.status(403).json({
+    success: false,
+    message: "Customer can only cancel booking",
+  });
+}
+
+if (user.role === 'admin' && status !== 'returned') {
+  return res.status(403).json({
+    success: false,
+    message: "Admin can only mark booking as returned",
+  });
+}
+
+
+   const result=await bookingServices.updateBookingStatus(req.params.bookingId as string,status)
   // console.log(result.rows[0]);
   
     if (result.booking.rows.length === 0 || result.vehicle.rows.length === 0) {

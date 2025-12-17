@@ -49,7 +49,7 @@ const getBookings = async (userId:string) => {
   return result;
 };
 
-const updateBooking = async (bookingId: string, status: string) => {
+const updateBookingStatus = async (bookingId: string, status: string) => {
   const bookingUpdateResult = await pool.query(
     `UPDATE bookings SET  status=$1  WHERE id=$2 RETURNING *`,
     [status, bookingId]
@@ -57,13 +57,16 @@ const updateBooking = async (bookingId: string, status: string) => {
 
   const vehicleUpdateResult = await pool.query(
     `UPDATE vehicles v SET availability_status = CASE 
-               WHEN b."status" IN ('active', 'booked') THEN 'booked'
-                WHEN b."status" IN ('returned', 'cancelled') THEN 'available'
+               WHEN $1 IN ('active', 'booked') THEN 'booked'
+                WHEN $1 IN ('returned', 'cancelled') THEN 'available'
              END
  FROM bookings b
- WHERE b.id = $1
-   AND v.id = b.vehicle_id RETURNING v.availability_status`,
-    [bookingId]
+  WHERE v.id = (
+     SELECT b.vehicle_id FROM bookings b WHERE b.id = $2
+   )
+      RETURNING v.availability_status`
+     ,
+    [status,bookingId]
   );
 
   return {
@@ -75,7 +78,7 @@ const updateBooking = async (bookingId: string, status: string) => {
 export const bookingServices = {
   createBooking,
   getBookings,
-  updateBooking,
+  updateBookingStatus,
 };
 
 

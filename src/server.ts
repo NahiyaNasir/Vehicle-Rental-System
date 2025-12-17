@@ -3,7 +3,6 @@ import express, { Request, Response }  from "express";
 import { userRoute } from "./modules/user/userRoute";
 import { authRoutes } from "./modules/auth/authRoute";
 import { vehicleRoute } from "./modules/Vehicle/vehicleRoute";
-import logger from "./middleware/verify";
 import { bookingRoute } from "./modules/Bookings/bookingRoute";
 import verify from "./middleware/verify";
 
